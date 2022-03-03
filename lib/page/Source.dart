@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-
 import '../Service/ApiClient.dart';
 import '../model/News.dart';
 import 'item_detail.dart';
 
 class source extends StatelessWidget {
   late List<News> newsList;
+  int page =1;
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +56,7 @@ class source extends StatelessWidget {
                     }
                   } else if (snapshot.hasError) {
                     return Center(
-                      child: Text(' ${snapshot.error} '),
+                      child: Text(' Please check Internet Connection '),
                     );
                   } else {
                     return Center(
@@ -73,7 +73,8 @@ class source extends StatelessWidget {
   }
 
   getNewsList(String s) async {
-    newsList = await ApiService().getNewsList(s);
+    newsList = await ApiService().getNewsList(s,page
+    );
     return newsList;
   }
 }
