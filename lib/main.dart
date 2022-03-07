@@ -1,8 +1,9 @@
+import 'package:demo/Service/ApiClient.dart';
+import 'package:demo/bloc/cubit/news_service_cubit.dart';
 import 'package:demo/page/BreakingNews.dart';
 import 'package:demo/page/Source.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,10 +16,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: homepage(),
+      home: BlocProvider(
+        create: (context) => NewsServiceCubit(ApiService())..FetchIntialpage(),
+        child: homepage(),
+      ),
     );
   }
 }
+
 
 class homepage extends StatelessWidget {
   const homepage({Key? key}) : super(key: key);
@@ -43,8 +48,8 @@ class homepage extends StatelessWidget {
           ),
           body: TabBarView(
             children:<Widget> [
-              breaking(),
-              source()
+              BreakingTab(),
+              SourceTab()
             ],
           ),
       ),

@@ -6,7 +6,7 @@ import 'package:api_cache_manager/models/cache_db_model.dart';
 
 class ApiService {
   static String BASE_URL = 'https://newsapi.org/v2/everything?q=';
-  static int current_page =1;
+  static int current_page = 1;
 
   getNewsList(String q,current_page) async {
 
@@ -27,12 +27,14 @@ class ApiService {
         var result = jsonDecode(respone.body);
         newsList = (result['articles'] as List).map((i) => News.fromJson(i)).toList();
         print('${newsList.length}');
-
         return newsList;
+
+      }
+      else{
+        throw NewsServerError();
       }
     }
     else{
-      
       var cacheData = await APICacheManager().getCacheData("Api_Categories");
       List<News> newsList;
       var result = jsonDecode(cacheData.syncData);
@@ -42,3 +44,6 @@ class ApiService {
 
   }
 }
+
+
+class NewsServerError implements Exception{}

@@ -1,14 +1,17 @@
+import 'package:demo/bloc/cubit/news_service_cubit.dart';
 import 'package:flutter/material.dart';
 import '../Service/ApiClient.dart';
 import '../model/News.dart';
 import 'item_detail.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class source extends StatelessWidget {
+class SourceTab extends StatelessWidget {
   late List<News> newsList;
   int page =1;
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: Colors.white54,
       body: SafeArea(
@@ -16,7 +19,7 @@ class source extends StatelessWidget {
           children: <Widget>[
             Expanded(
               child: FutureBuilder(
-                future: getNewsList('techcrunch'),
+                future: getNewsList('b'),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     if (newsList.length == 0) {
